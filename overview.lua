@@ -36,7 +36,7 @@ local function place_overview_node(mapblock_pos, overview_def, rotation, size)
     local mapblock_pos2 = vector.add(mapblock_pos, vector.subtract(size, 1))
 
     mapblock_lib.for_each(mapblock_pos, mapblock_pos2, function(offset_mapblock_pos)
-        local node_pos = building_lib_overview.mapblock_pos_to_overview(mapblock_pos)
+        local node_pos = building_lib_overview.mapblock_pos_to_overview(offset_mapblock_pos)
         minetest.load_area(node_pos)
 
         if type(overview_def) == "string" then
