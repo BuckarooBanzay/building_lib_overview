@@ -32,7 +32,7 @@ building_lib.register_on("placed", function(mapblock_pos, _, building_def, rotat
     place_overview_node(mapblock_pos, building_def.overview, rotation, size)
 end)
 
-building_lib.register_on("replaced", function(mapblock_pos, _, _, building_def, rotation, size)
+building_lib.register_on("replaced", function(mapblock_pos, _, _, _, _, building_def, rotation, size)
     place_overview_node(mapblock_pos, building_def.overview, rotation, size)
 end)
 
