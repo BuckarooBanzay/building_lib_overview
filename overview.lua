@@ -24,23 +24,23 @@ local function place_overview_node(mapblock_pos, overview_def, rotation, size)
     end)
 end
 
-building_lib.register_on("placed_mapgen", function(mapblock_pos, building_def, rotation)
-    place_overview_node(mapblock_pos, building_def.overview, rotation)
+building_lib.register_on("placed_mapgen", function(e)
+    place_overview_node(e.mapblock_pos, e.building_def.overview, e.rotation)
 end)
 
-building_lib.register_on("placed", function(mapblock_pos, _, building_def, rotation, size)
-    place_overview_node(mapblock_pos, building_def.overview, rotation, size)
+building_lib.register_on("placed", function(e)
+    place_overview_node(e.mapblock_pos, e.building_def.overview, e.rotation, e.size)
 end)
 
-building_lib.register_on("replaced", function(mapblock_pos, _, _, _, _, building_def, rotation, size)
-    place_overview_node(mapblock_pos, building_def.overview, rotation, size)
+building_lib.register_on("replaced", function(e)
+    place_overview_node(e.mapblock_pos, e.building_def.overview, e.rotation, e.size)
 end)
 
-building_lib.register_on("removed", function(mapblock_pos, _, building_info)
-    local size = building_info.size or {x=1, y=1, z=1}
-    local mapblock_pos2 = vector.add(mapblock_pos, vector.subtract(size, 1))
+building_lib.register_on("removed", function(e)
+    local size = e.building_info.size or {x=1, y=1, z=1}
+    local mapblock_pos2 = vector.add(e.mapblock_pos, vector.subtract(size, 1))
 
-    mapblock_lib.for_each(mapblock_pos, mapblock_pos2, function(offset_mapblock_pos)
+    mapblock_lib.for_each(e.mapblock_pos, mapblock_pos2, function(offset_mapblock_pos)
         local node_pos = building_lib_overview.mapblock_pos_to_overview(offset_mapblock_pos)
         minetest.load_area(node_pos)
         minetest.set_node(node_pos, { name = "air" })
