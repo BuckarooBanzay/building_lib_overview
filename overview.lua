@@ -17,8 +17,9 @@ local function place_overview_node(e)
             local param2 = mapblock_lib.rotate_param2(overview_def, 0, rotation)
             minetest.set_node(node_pos, { name=overview_def, param2=param2 })
         elseif type(overview_def) == "table" then
-            overview_def.param2 = mapblock_lib.rotate_param2(overview_def.name, overview_def.param2 or 0, rotation)
-            minetest.set_node(node_pos, overview_def)
+            local node_def = { name = overview_def.name, param2 = overview_def.param2 or 0 }
+            node_def.param2 = mapblock_lib.rotate_param2(node_def.name, node_def.param2, rotation)
+            minetest.set_node(node_pos, node_def)
         elseif type(overview_def) == "function" then
             local rel_mapblock_pos = vector.subtract(offset_mapblock_pos, mapblock_pos)
             local node = overview_def(rel_mapblock_pos, e)
